@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <a class="brand" href="/books">The Stacks<small>Library desk</small></a>
+        <p class="nav-label">Manage</p>
+        <a class="nav-link" href="/books">&#9632; Books</a>
+        <a class="nav-link active" href="/author-view">&#9670; Authors</a>
+        <a class="nav-link" href="/member-view">&#9679; Members</a>
+    </aside>
+    <main class="content"><div class="content-inner">
+    <div class="page-head">
+        <div><p class="eyebrow">Library catalogue</p><h1>Authors</h1><p class="intro">Keep the people behind your collection easy to find and even easier to maintain.</p></div>
+        <div class="toolbar"><a href="/author-view/new" class="btn">+ Add author</a></div>
+    </div>
+    <div class="stat-row"><div class="stat"><span>Total authors</span><strong th:text="${#lists.size(authors)}">0</strong></div><div class="stat"><span>Catalogue role</span><strong>Writers</strong></div><div class="stat"><span>Workspace</span><strong>Active</strong></div></div>
+    <div class="table-wrap"><table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author : ${authors}">
+            <td class="id" th:text="${author.id}">01</td>
+            <td th:text="${author.name}">Author name</td>
+            <td th:text="${author.country}">Country</td>
+            <td class="actions">
+                <a class="edit" th:href="@{/author-view/edit/{id}(id=${author.id})}">Edit</a>
+                <a class="delete"
+                   th:href="@{/author-view/delete/{id}(id=${author.id})}"
+                   onclick="return confirm('Are you sure you want to delete this author?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table><p class="empty" th:if="${#lists.isEmpty(authors)}">No authors available yet.</p></div>
+    </div></main>
+</div>
+</body>
+</html>
